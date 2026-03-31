@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Boys Two - Premium Restaurant</title><!-- Google Font --><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"><style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: rgba(0,0,0,0.9);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+nav a {
+  color: gold;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero {
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c') center/cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+}
+
+.btn {
+  padding: 12px 25px;
+  background: gold;
+  color: black;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #1a1a1a;
+  padding: 15px;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+form {
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 10px;
+  margin: 10px 0;
+}
+
+footer {
+  background: black;
+  padding: 20px;
+  text-align: center;
+}
+
+</style></head>
+<body><nav>
+  <div><strong>The Boys Two</strong></div>
+  <div>
+    <a href="#menu">Menu</a>
+    <a href="#booking">Booking</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav><section class="hero">
+  <h1>Luxury Dining Experience</h1>
+  <p>Best restaurant in Addis Ababa</p>
+  <button class="btn" onclick="scrollToBooking()">Book Now</button>
+</section><section id="menu">
+  <h2>Menu</h2>
+  <div class="menu"><div class="card">
+  <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
+  <h3>Burger</h3>
+  <p>250 ETB</p>
+</div>
+
+<div class="card">
+  <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088">
+  <h3>Pizza</h3>
+  <p>400 ETB</p>
+</div>
+
+<div class="card">
+  <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb36">
+  <h3>Pasta</h3>
+  <p>300 ETB</p>
+</div>
+
+<div class="card">
+  <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348">
+  <h3>Coffee</h3>
+  <p>100 ETB</p>
+</div>
+
+  </div>
+</section><section id="booking">
+  <h2>Book a Table</h2>  <form onsubmit="submitBooking(event)">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="date" id="date" required>
+    <input type="time" id="time" required>
+    <input type="number" id="people" placeholder="Number of People" required><button class="btn" type="submit">Send Booking</button>
+
+  </form>  <p id="msg"></p></section><section id="contact">
+  <h2>Contact & WhatsApp</h2>
+  <p>📞 +251 900 000 000</p><a class="btn" id="whatsappBtn" target="_blank">Book via WhatsApp</a>
+
+</section><footer>
+  <p>© 2026 The Boys Two</p>
+</footer><script>
+// Smooth scroll
+function scrollToBooking() {
+  document.getElementById('booking').scrollIntoView({behavior: 'smooth'});
+}
+
+// WhatsApp booking link
+let phone = "251900000000"; // change this
+let msg = "Hello, I want to book a table.";
+let whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+document.getElementById("whatsappBtn").href = whatsappLink;
+
+// Booking form (local + demo "database")
+function submitBooking(e) {
+  e.preventDefault();
+
+  let booking = {
+    name: document.getElementById('name').value,
+    date: document.getElementById('date').value,
+    time: document.getElementById('time').value,
+    people: document.getElementById('people').value
+  };
+
+  // Save locally (demo database)
+  let bookings = JSON.parse(localStorage.getItem('bookings') || "[]");
+  bookings.push(booking);
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+
+  document.getElementById('msg').innerText = "Booking saved successfully!";
+
+  // Send to WhatsApp automatically
+  let text = `Booking:\nName: ${booking.name}\nDate: ${booking.date}\nTime: ${booking.time}\nPeople: ${booking.people}`;
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+}
+</script></body>
+</html>
